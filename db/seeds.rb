@@ -5,5 +5,5 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-
-Entry.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }, { name: 'Titanic' }, { name: 'The Godfather' }])
+Candidate.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
+Entry.create([{ name: 'Titanic' }, { name: 'The Godfather' }])
