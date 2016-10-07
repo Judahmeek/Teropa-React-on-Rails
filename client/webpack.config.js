@@ -9,7 +9,7 @@ const config = {
     'es5-shim/es5-shim',
     'es5-shim/es5-sham',
     'babel-polyfill',
-    './app/bundles/HelloWorld/startup/HelloWorldApp',
+    './app/bundles/Teropa/startup/App',
   ],
 
   output: {
@@ -20,10 +20,12 @@ const config = {
   resolve: {
     extensions: ['', '.js', '.jsx'],
     alias: {
+      libs: path.join(process.cwd(), 'app', 'libs'),
       react: path.resolve('./node_modules/react'),
       'react-dom': path.resolve('./node_modules/react-dom'),
     },
   },
+  
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
@@ -31,6 +33,7 @@ const config = {
       },
     }),
   ],
+  
   module: {
     loaders: [
       {

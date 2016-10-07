@@ -1,4 +1,5 @@
 import request from 'axios';
+import apiUrl from 'libs/apiUrl';
 import ReactOnRails from 'react-on-rails';
 
 export default {
@@ -25,7 +26,7 @@ export default {
   submitEntity(entity, url) {
     return request({
       method: 'POST',
-      url,
+      url: apiUrl[entity.type],
       responseType: 'json',
       headers: ReactOnRails.authenticityHeaders(),
       data: entity,
