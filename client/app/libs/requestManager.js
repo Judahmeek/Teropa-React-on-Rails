@@ -1,5 +1,6 @@
 import request from 'axios';
-import apiUrl from 'libs/apiUrl';
+import apiUrl from './apiUrl';
+//mocha2 fail console.log(ReactOnrails);
 import ReactOnRails from 'react-on-rails';
 
 export default {

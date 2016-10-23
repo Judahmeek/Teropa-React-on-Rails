@@ -1,5 +1,5 @@
 import actionTypes from '../constants/actionTypes';
-import requestManager from 'libs/requestManager';
+import requestManager from '../../../libs/requestManager';
 
 export function next() {
   return dispatch => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import BaseComponent from 'libs/components/BaseComponent';
+import BaseComponent from '../../../libs/components/BaseComponent';
 
 import Winner from '../components/Winner';
 import Vote from '../components/Vote';

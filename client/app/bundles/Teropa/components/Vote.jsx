@@ -1,5 +1,5 @@
 import React from 'react';
-import BaseComponent from 'libs/components/BaseComponent';
+import BaseComponent from '../../../libs/components/BaseComponent';
 
 export default class Vote extends BaseComponent {
   getPair() {
