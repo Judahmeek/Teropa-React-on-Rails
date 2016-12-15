@@ -24,7 +24,7 @@ function vote($$state, entry) {
   }
 }
 
-export default function($$state = Map(), action) {
+export default function($$state = Immutable.Map(), action) {
   switch (action.type) {
   case actionTypes.SET_STATE:
     return setState($$state, action.state);

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactOnRails from 'react-on-rails';
 import { Provider } from 'react-redux';
 import { Router, hashHistory } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
 
 import routes from '../routes/routes';
 import createStore from '../store/store';
@@ -13,9 +14,18 @@ import createStore from '../store/store';
 // knowing the locale. See the React on Rails documentation for more info on the railsContext
 const App = (props, _railsContext) => {
   const store = createStore(props);
+  
+  // Create an enhanced history that syncs navigation events with the store
+  const history = syncHistoryWithStore(
+    hashHistory,
+    store,
+  );
+
   return (
     <Provider store={store}>
-      <Router history={hashHistory} children={routes} />
+      <Router history={history}>
+        {routes}
+      </Router>
     </Provider>
   );
 };

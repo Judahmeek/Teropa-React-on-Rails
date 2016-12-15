@@ -49,9 +49,9 @@ export class Results extends BaseComponent {
 
 function mapStateToProps(state) {
   return {
-    pair: state.getIn(['vote', 'pair']),
-    tally: state.getIn(['vote', 'tally']),
-    winner: state.get('winner')
+    pair: state.$$store.getIn(['$$props', 'vote', 'pair']),
+    tally: state.$$store.getIn(['$$props', 'vote', 'tally']),
+    winner: state.$$store.getIn(['$$props', 'winner'])
   };
 }
 

@@ -3,11 +3,9 @@ ruby "2.3.1"
 
 gem "rails"
 gem "listen"
-
-gem "sqlite3", group: [:development, :test]
+gem "pg"
 
 group :production do
-  gem "pg"
   gem "rails_12factor" # Never include this for development or tests
 end
 
@@ -69,7 +67,7 @@ group :development, :test do
   # Color console output
   gem "rainbow"
 end
-
+=begin
 group :test  do
   gem "rails-controller-testing"
   gem "coveralls", require: false
@@ -81,7 +79,8 @@ group :test  do
   gem "generator_spec"
   gem "launchy"
   gem "poltergeist"
-  gem "rspec-rails", "3.5.0.beta3"
+  gem "rspec-rails", "~> 3.5.0.beta3"
   gem "rspec-retry"
   gem "selenium-webdriver", require: !["poltergeist", "poltergeist_errors_ok", "webkit"].include?(ENV["DRIVER"])
 end
+=end

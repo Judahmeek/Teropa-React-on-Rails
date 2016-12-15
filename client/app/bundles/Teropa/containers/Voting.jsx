@@ -19,9 +19,9 @@ export class Voting extends BaseComponent {
 
 function mapStateToProps(state) {
   return {
-    pair: state.getIn(['vote', 'pair']),
-    hasChosen: state.get('hasChosen'),
-    winner: state.get('winner')
+    pair: state.$$store.getIn(['$$props', 'vote', 'pair']),
+    hasChosen: state.$$store.getIn(['$$props', 'hasChosen']),
+    winner: state.$$store.getIn(['$$props', 'winner'])
   };
 }
 
