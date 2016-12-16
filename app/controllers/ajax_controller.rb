@@ -1,7 +1,7 @@
 class AjaxController < ApplicationController
   def next_round
-    pair = Candidate.all
-    survivors = helpers.select_winner(pair)
+    candidate_pair = Candidate.all
+    survivors = helpers.select_winner(candidate_pair)
     if survivors.size == 2 #in case of tie
       @pair = survivors
     else
@@ -13,8 +13,8 @@ class AjaxController < ApplicationController
       if entries.size == 1
         render json: {winner: entries[0].name} and return
       else
-        candidates = entries.map { |entry| Candidate.create(name: entry.name) }
-        @pair = candidates
+        candidate_pair = entries.map { |entry| Candidate.create(name: entry.name) }
+        @props = strip_timestamps(candidate_pair)
       end
     end
     render 'ajax/pair', formats: :json
@@ -25,7 +25,8 @@ class AjaxController < ApplicationController
     Candidate.destroy_all
     Entry.destroy_all
     ActiveRecord::Tasks::DatabaseTasks.load_seed
-    @pair = Candidate.all
+    candidate_pair = Candidate.all
+    @props = strip_timestamps(candidate_pair)
     render 'ajax/pair', formats: :json
   end
   
@@ -47,7 +48,8 @@ class AjaxController < ApplicationController
       vote = Vote.create(candidates_id: params[:id])
       session[:user_id] = vote.id
     end
-    @pair = Candidate.all
+    candidate_pair = Candidate.all
+    @props = strip_timestamps(candidate_pair)
     render 'ajax/pair', formats: :json
   end
 end

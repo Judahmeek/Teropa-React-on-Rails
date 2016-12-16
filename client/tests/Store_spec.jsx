@@ -6,20 +6,22 @@ import createStore from '../app/bundles/Teropa/store/store';
 describe('Store', () => {
 
   it('creates a store based on given props', () => {
-    const props = { vote: { pair: ['one', 'two'], tally: {'one': 1, 'two': 2} } };
+    const props = [{id: 1, name: "Red", tally: 2}, {id: 3, name: "Blue", tally: 4}]
     const store = createStore(props);
     expect(store.getState().$$store).to.equal(
       Map({
-        "$$pair": Map({}),
-        "$$props": Map({
-          "vote": Map({
-            "pair": List([ "one", "two" ]),
-            "tally": Map({
-              "one": 1,
-              "two": 2
-              })
+        "$$pair": List([
+            Map({
+              id: 1,
+              name: "Red",
+              tally: 2,
+            }),
+            Map({
+              id: 3,
+              name: "Blue",
+              tally: 4,
             })
-            })
+          ]),
         })
       );
   });

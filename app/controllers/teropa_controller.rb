@@ -4,11 +4,7 @@ class TeropaController < ApplicationController
     if candidate_pair.empty?
       @props = { winner: Entry.first.name }
     else
-      @props = { vote: { pair: [], tally: {} } }
-      candidate_pair.each do |candidate|
-        @props[:vote][:pair].append(candidate.name)
-        @props[:vote][:tally][candidate.name] = candidate.total_votes
-      end
+      @props = strip_timestamps(candidate_pair)
     end
   end
 end

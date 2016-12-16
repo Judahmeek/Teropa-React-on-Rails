@@ -31,9 +31,8 @@ export function restart() {
 export function vote(entry) {
   return dispatch => {
     const vote = {
-          clientId: localStorage.getItem('clientId'),
           type: actionTypes.VOTE,
-          entry
+          id: entry.get('id')
         };
     dispatch(vote);
     return (
