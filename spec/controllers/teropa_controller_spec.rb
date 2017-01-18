@@ -9,9 +9,9 @@ RSpec.describe TeropaController, type: :controller do
     end
     
     it "contains both candidates if the candidate table is populated" do
-      Candidate.create([{name: "Burger King"}, {name: "McDonalds"}])
+      candidates = Candidate.create([{name: "Burger King"}, {name: "McDonalds"}])
       get :index
-      expect(assigns(:props)).to eql({:vote => {:pair=>["Burger King", "McDonalds"], :tally=>{"Burger King"=>0, "McDonalds"=>0}}})
+      expect(assigns(:props)).to eql([{"id"=>candidates[0].id, "name"=>"Burger King", "total_votes"=>0}, {"id"=>candidates[1].id, "name"=>"McDonalds", "total_votes"=>0}])
     end
   end
 end
