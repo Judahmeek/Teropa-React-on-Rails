@@ -6,13 +6,13 @@ export const $$initialState = Immutable.fromJS({
 });
 
 function setState($$state, newState) {
-  let mergedState = $$state.merge(newState);
+  let $$mergedState = $$state.mergeIn(['$$pair'], Immutable.fromJS(newState));
   const oldPair = $$state.get('$$pair', Immutable.List());
-  const newPair = mergedState.get('$$pair', Immutable.List());
-  if (mergedState.get('hasChosen') && !oldPair.equals(newPair)) {
-    return mergedState.remove('hasChosen');
+  const newPair = $$mergedState.get('$$pair', Immutable.List());
+  if ($$mergedState.get('hasChosen') && !oldPair.equals(newPair)) {
+    return $$mergedState.remove('hasChosen');
   }
-  return mergedState;
+  return $$mergedState;
 }
 
 function vote($$state, entry) {

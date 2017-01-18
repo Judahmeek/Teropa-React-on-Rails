@@ -37,7 +37,6 @@ describe "Results", js: true  do
             click_button('Star Wars')
             visit '#/results'
             expect(page.find('h1', text: 'Star Wars', match: :prefer_exact).find(:xpath, '..')).to have_text '1'
-            
             click_button 'Next'
             expect(page).to have_text `Winner is "Star Wars"!`
         end

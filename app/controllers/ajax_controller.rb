@@ -18,7 +18,7 @@ class AjaxController < ApplicationController
         @pair = strip_timestamps(candidate_pair)
       end
     end
-    render 'ajax/pair', formats: :json
+    render json: strip_timestamps(candidate_pair)
   end
   
   def restart
@@ -29,7 +29,7 @@ class AjaxController < ApplicationController
     session[:vote_id] = nil
     candidate_pair = Candidate.order(:id)
     @pair = strip_timestamps(candidate_pair)
-    render 'ajax/pair', formats: :json
+    render json: strip_timestamps(candidate_pair)
   end
   
   def vote
@@ -56,6 +56,6 @@ class AjaxController < ApplicationController
     
     candidate_pair = Candidate.order(:id)
     @pair = strip_timestamps(candidate_pair)
-    render 'ajax/pair', formats: :json
+    render json: strip_timestamps(candidate_pair)
   end
 end

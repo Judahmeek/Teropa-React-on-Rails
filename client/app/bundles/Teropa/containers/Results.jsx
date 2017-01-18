@@ -21,13 +21,14 @@ export class Results extends BaseComponent {
             <div key={entry} className="entry">
               <h1>{entry.get('name')}</h1>
               <div className="voteCount">
-                {entry.get('tally')}
+                {entry.get('total_votes')}
               </div>
             </div>
           )}
         </div>
         <div className="management">
           <button ref="restart"
+                   className="restart"
                   onClick={this.props.restart}>
             Restart
           </button>
