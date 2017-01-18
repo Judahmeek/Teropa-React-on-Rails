@@ -67,20 +67,16 @@ group :development, :test do
   # Color console output
   gem "rainbow"
 end
-=begin
+
 group :test  do
   gem "rails-controller-testing"
-  gem "coveralls", require: false
   gem "capybara"
   gem "capybara-screenshot"
-  gem "capybara-webkit"
-  gem "chromedriver-helper", require: ["selenium_chrome"].include?(ENV["DRIVER"])
+  gem "chromedriver-helper"
   gem "database_cleaner"
   gem "generator_spec"
   gem "launchy"
-  gem "poltergeist"
   gem "rspec-rails", "~> 3.5.0.beta3"
   gem "rspec-retry"
-  gem "selenium-webdriver", require: !["poltergeist", "poltergeist_errors_ok", "webkit"].include?(ENV["DRIVER"])
+  gem "selenium-webdriver", "<3.0.0"
 end
-=end
