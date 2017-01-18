@@ -12,30 +12,30 @@ RSpec.describe AjaxController, type: :controller do
       Candidate.create([{name: "Taco Bell", total_votes: 2}, {name: "McDonalds", total_votes: 0}])
       Entry.create(name: "Burger King")
       post :next_round
-      expect(response).to render_template('ajax/pair')
-      candidates = assigns(:pair)
-      expect(candidates.map(&:name)).to eql(["Burger King", "Taco Bell"])
+      expect(response.body).to match('"Burger King"')
+      expect(response.body).to match('"Taco Bell"')
     end
     
     it "purges the votes and candidates tables" do
-      Candidate.create([{name: "Taco Bell", total_votes: 2}, {name: "McDonalds", total_votes: 0}])
+      candidates = Candidate.create([{name: "Taco Bell", total_votes: 2}, {name: "McDonalds", total_votes: 0}])
       Entry.create(name: "Burger King")
-      Vote.create(candidates_id: 3)
+      Vote.create(candidates_id: candidates[0].id)
       post :next_round
       expect(Vote.any?).to be_falsy
     end
     
     it "does nothing if there is a tie between candidates" do
-      Candidate.create([{name: "Taco Bell", total_votes: 2}, {name: "McDonalds", total_votes: 2}])
+      candidates = Candidate.create([{name: "Taco Bell", total_votes: 2}, {name: "McDonalds", total_votes: 2}])
       post :next_round
-      expect(response.body).to eql('')
+      expect(response.body).to eql([{id: candidates[0].id, name: "Taco Bell", total_votes: 2},
+                                    {id: candidates[1].id, name: "McDonalds", total_votes: 2}].to_json)
     end
   end
   
   describe "restart" do
     it "clears and reseeds entry database" do
-      Candidate.create(name: "Ice Cream")
-      Vote.create(candidates_id: 4)
+      candidate = Candidate.create(name: "Ice Cream")
+      Vote.create(candidates_id: candidate.id)
       Entry.create(name: "This shouldn't be here")
       post :restart
       expect(Vote.first).to be_falsy
@@ -52,29 +52,31 @@ RSpec.describe AjaxController, type: :controller do
   
   describe "vote" do
     it "increments the total_votes counter for the select candidate" do
-      Candidate.create(name: "Taco Bell", total_votes: 2)
+      candidate = Candidate.create(name: "Taco Bell", total_votes: 2)
       selected_candidate = Candidate.create(name: "McDonalds", total_votes: 0)
       post :vote, params: { id: selected_candidate.id }
-      expect(response.body).to eql('')
+      expect(response.body).to eql([{id: candidate.id, name:'Taco Bell', total_votes: 2},
+                                    {id: selected_candidate.id, name:'McDonalds', total_votes: 1}].to_json)
     end
     
     it "provides the voter with a session_id if the voter does not have one already" do
       Candidate.create(name: "Taco Bell", total_votes: 2)
       selected_candidate = Candidate.create(name: "McDonalds", total_votes: 0)
+      expect(session[:user_id]).to be_nil
       post :vote, params: { id: selected_candidate.id }
-      expect(session[:user_id]).to eql(1)
+      expect(session[:user_id]).to be_truthy
     end
     
     it "updates the total_votes counter for both candidates if the voter is switching their vote" do
       old_candidate = Candidate.create(name: "Taco Bell", total_votes: 2)
-      selected_candidate = Candidate.create(name: "McDonalds", total_votes: 0)
+      new_candidate = Candidate.create(name: "McDonalds", total_votes: 0)
       vote = Vote.create(candidates_id: old_candidate.id)
-      post :vote, params: { id: selected_candidate.id }, session: { user_id: vote.id }
-      expect(response.body).to eql('')
+      post :vote, params: { id: new_candidate.id }, session: { user_id: vote.id }
+      expect(response.body).to eql([{id: old_candidate.id, name:'Taco Bell', total_votes: 1},
+                                    {id: new_candidate.id, name:'McDonalds', total_votes: 1}].to_json)
     end
     
-    it "does nothing if the voter repeats the same vote" do
-      Candidate.create(name: "Taco Bell", total_votes: 2)
+    it "renders nothing if the voter repeats the same vote" do
       selected_candidate = Candidate.create(name: "McDonalds", total_votes: 0)
       vote = Vote.create(candidates_id: selected_candidate.id)
       post :vote, params: { id: selected_candidate.id }, session: { user_id: vote.id }
