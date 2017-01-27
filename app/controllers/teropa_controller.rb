@@ -1,10 +1,12 @@
+# This controller and its corresponding view supply the react component and its initial props
+# frozen_string_literal: true
 class TeropaController < ApplicationController
   def index
     candidate_pair = Candidate.order(:id)
-    if candidate_pair.empty?
-      @props = { winner: Entry.first.name }
-    else
-      @props = strip_timestamps(candidate_pair)
-    end
+    @props = if candidate_pair.empty?
+               { winner: Entry.first.name }
+             else
+               strip_timestamps(candidate_pair)
+             end
   end
 end

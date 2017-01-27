@@ -1,13 +1,9 @@
+#:nodoc:
+# frozen_string_literal: true
 module AjaxHelper
-  def select_winner(candidates)
-    if candidates[0].total_votes > candidates[1].total_votes
-      return [candidates[0]]
-    end
-    
-    if candidates[1].total_votes > candidates[0].total_votes
-      return [candidates[1]]
-    end
-    
-    candidates
+  def select_winner(choices)
+    return [choices[0]] if choices[0].total_votes > choices[1].total_votes
+    return [choices[1]] if choices[1].total_votes > choices[0].total_votes
+    choices
   end
 end

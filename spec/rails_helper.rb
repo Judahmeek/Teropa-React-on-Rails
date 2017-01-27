@@ -1,11 +1,13 @@
-ENV["RAILS_ENV"] ||= "test"
-require File.expand_path("../../config/environment", __FILE__)
-require "rspec/rails"
-abort("The Rails environment is running in production mode!") if Rails.env.production?
-require "spec_helper"
-require "capybara/rspec"
-require "capybara-screenshot/rspec"
-require "database_cleaner"
+# frozen_string_literal: true
+
+ENV['RAILS_ENV'] ||= 'test'
+require File.expand_path('../../config/environment', __FILE__)
+require 'rspec/rails'
+abort('The Rails environment is running in production mode!') if Rails.env.production?
+require 'spec_helper'
+require 'capybara/rspec'
+require 'capybara-screenshot/rspec'
+require 'database_cleaner'
 
 # Checks for pending migrations before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
@@ -13,14 +15,14 @@ ActiveRecord::Migration.maintain_test_schema!
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.
-Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 
   # Next line will ensure that assets are built if webpack -w is not running
   ReactOnRails::TestHelper.configure_rspec_to_compile_assets(config)
-  
+
   driver = :selenium_chrome
 
   DriverRegistration.register_selenium_chrome
@@ -29,14 +31,14 @@ RSpec.configure do |config|
   Capybara.default_driver = driver
 
   Capybara.register_server(Capybara.javascript_driver) do |app, port|
-    require "rack/handler/puma"
+    require 'rack/handler/puma'
     Rack::Handler::Puma.run(app, Port: port)
   end
 
   # Capybara.default_max_wait_time = 15
   puts "Capybara using driver: #{Capybara.javascript_driver}"
 
-  Capybara.save_path = Rails.root.join("tmp", "capybara")
+  Capybara.save_path = Rails.root.join('tmp', 'capybara')
   Capybara::Screenshot.prune_strategy = { keep: 10 }
 
   def js_errors_driver
@@ -92,8 +94,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
     Capybara.reset_sessions!
   end
-  
-  
+
   config.use_transactional_fixtures = false
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!

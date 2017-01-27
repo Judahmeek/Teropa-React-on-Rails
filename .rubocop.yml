@@ -1,0 +1,20 @@
+AllCops:
+  Exclude:
+    - client/**/*
+    - bin/**/*
+    - db/schema.rb
+
+Metrics/AbcSize:
+  Exclude:
+    - app/controllers/ajax_controller.rb
+
+Metrics/MethodLength:
+  Exclude:
+    - app/controllers/ajax_controller.rb
+
+Metrics/LineLength:
+  Max: 100
+
+Style/AndOr:
+  Exclude:
+    - app/controllers/ajax_controller.rb
