@@ -6,7 +6,7 @@ export default class Vote extends BaseComponent {
     return this.props.pair || [];
   }
   hasChosen(entry) {
-    return this.props.hasChosen === entry;
+    return this.props.hasChosen === entry.get('id');
   }
   render() {
     return <div className="voting">

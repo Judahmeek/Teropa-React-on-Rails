@@ -7,18 +7,19 @@ export const $$initialState = Immutable.fromJS({
 
 function setState($$state, newState) {
   let $$mergedState = $$state.mergeIn(['$$pair'], Immutable.fromJS(newState));
-  const oldPair = $$state.get('$$pair', Immutable.List());
-  const newPair = $$mergedState.get('$$pair', Immutable.List());
-  if ($$mergedState.get('hasChosen') && !oldPair.equals(newPair)) {
+  const idComparison = [$$state.getIn(['$$pair', 0, 'id']) == $$mergedState.getIn(['$$pair', 0, 'id']),
+                        $$state.getIn(['$$pair', 1, 'id']) == $$mergedState.getIn(['$$pair', 1, 'id'])];
+  if ($$mergedState.get('hasChosen') && !(idComparison[0] && idComparison[1]) ) {
     return $$mergedState.remove('hasChosen');
   }
   return $$mergedState;
 }
 
-function vote($$state, entry) {
-  const currentPair = $$state.get('$$pair');
-  if (currentPair && currentPair.includes(entry)) {
-    return $$state.set('hasChosen', entry)
+function vote($$state, id) {
+  const idComparison = [$$state.getIn(['$$pair', 0, 'id']) == id,
+                        $$state.getIn(['$$pair', 1, 'id']) == id];
+  if (idComparison[0] || idComparison[1]) {
+    return $$state.set('hasChosen', id);
   } else {
     return $$state;
   }
@@ -29,7 +30,7 @@ export default function($$state = Immutable.Map(), action) {
   case actionTypes.SET_STATE:
     return setState($$state, action.state);
   case actionTypes.VOTE:
-    return vote($$state, action.entry);
+    return vote($$state, action.id);
   }
   return $$state;
 }
