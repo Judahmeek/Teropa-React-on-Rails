@@ -5,17 +5,17 @@ import {
   scryRenderedDOMComponentsWithClass,
   Simulate
 } from 'react-addons-test-utils';
-import {List, Map} from 'immutable';
+import Immutable from 'immutable';
 import {Results} from '../app/bundles/Teropa/containers/Results';
 import {expect} from 'chai';
 
 describe('Results', () => {
 
   it('renders entries with vote counts or zero', () => {
-    const pair = List.of('Trainspotting', '28 Days Later');
-    const tally = Map({'Trainspotting': 5});
+    const pair = Immutable.fromJS([{'id': 1, 'name': 'Trainspotting', 'total_votes': 5},
+                         {'id': 2, 'name': '28 Days Later', 'total_votes': 0}]);
     const component = renderIntoDocument(
-      <Results pair={pair} tally={tally} />
+      <Results pair={pair} />
     );
     const entries = scryRenderedDOMComponentsWithClass(component, 'entry');
     const [train, days] = entries.map(e => e.textContent);
@@ -31,11 +31,11 @@ describe('Results', () => {
     let nextInvoked = false;
     const next = () => nextInvoked = true;
 
-    const pair = List.of('Trainspotting', '28 Days Later');
+    const pair = Immutable.fromJS([{'id': 1, 'name': 'Trainspotting', 'total_votes': 5},
+                         {'id': 2, 'name': '28 Days Later', 'total_votes': 0}]);
     const component = renderIntoDocument(
       <Results pair={pair}
-               tally={Map()}
-               next={next}/>
+               next={next} />
     );
     Simulate.click(ReactDOM.findDOMNode(component.refs.next));
 
@@ -45,11 +45,11 @@ describe('Results', () => {
   it('invokes the restart callback when restart button is clicked', () => {
     let restartInvoked = false;
 
-    const pair = List.of('Trainspotting', '28 Days Later');
+    const pair = Immutable.fromJS([{'id': 1, 'name': 'Trainspotting', 'total_votes': 5},
+                         {'id': 2, 'name': '28 Days Later', 'total_votes': 0}]);
     const component = renderIntoDocument(
       <Results pair={pair}
-               tally={Map()}
-               restart={() => restartInvoked = true}/>
+               restart={() => restartInvoked = true} />
     );
     Simulate.click(ReactDOM.findDOMNode(component.refs.restart));
 
@@ -58,9 +58,7 @@ describe('Results', () => {
   
   it('renders the winner when there is one', () => {
     const component = renderIntoDocument(
-      <Results winner="Trainspotting"
-               pair={["Trainspotting", "28 Days Later"]}
-               tally={Map()} />
+      <Results winner="Trainspotting" />
     );
     const winner = ReactDOM.findDOMNode(component.refs.winner);
     expect(winner).to.be.ok;
