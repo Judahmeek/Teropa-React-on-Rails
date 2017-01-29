@@ -1,7 +1,6 @@
 import request from 'axios';
-import apiUrl from './apiUrl';
-//mocha2 fail console.log(ReactOnrails);
 import ReactOnRails from 'react-on-rails';
+import apiUrl from './apiUrl';
 
 export default {
 
@@ -24,7 +23,7 @@ export default {
    * @param {Object} entity - Request body to post.
    * @returns {Promise} - Result of ajax call.
    */
-  submitEntity(entity, url) {
+  submitEntity(entity) {
     return request({
       method: 'POST',
       url: apiUrl[entity.type],

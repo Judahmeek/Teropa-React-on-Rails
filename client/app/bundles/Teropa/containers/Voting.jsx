@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 import BaseComponent from '../../../libs/components/BaseComponent';
 
@@ -9,23 +9,26 @@ import * as actionCreators from '../actions/actionCreators';
 
 export class Voting extends BaseComponent {
   render() {
-    return <div>
+    return (<div>
       {this.props.winner ?
-        <Winner ref="winner" winner={this.props.winner} /> :
+        <Winner
+          winnerRef={n => { this.winner = n; }}
+          winner={this.props.winner}
+        /> :
         <Vote {...this.props} />}
-    </div>;
+    </div>);
   }
-};
+}
 
 function mapStateToProps(state) {
   return {
     pair: state.$$store.get('$$pair'),
     hasChosen: state.$$store.get('hasChosen'),
-    winner: state.$$store.get('winner')
+    winner: state.$$store.get('winner'),
   };
 }
 
 export const VotingContainer = connect(
   mapStateToProps,
-  actionCreators
+  actionCreators,
 )(Voting);

@@ -5,16 +5,20 @@ import {
   scryRenderedDOMComponentsWithTag,
   Simulate,
 } from 'react-addons-test-utils';
+import { expect } from 'chai';
 import Immutable, { Map } from 'immutable';
 import { Voting } from '../app/bundles/Teropa/containers/Voting';
-import { expect } from 'chai';
 
 describe('Voting', () => {
   it('renders a pair of buttons', () => {
+    let component;
     const pair = Immutable.fromJS([{ id: 1, name: 'Trainspotting', total_votes: 5 },
                          { id: 2, name: '28 Days Later', total_votes: 0 }]);
-    const component = renderIntoDocument(
-      <Voting pair={pair} />,
+    renderIntoDocument(
+      <Voting
+        ref={n => { component = n; }}
+        pair={pair}
+      />,
     );
     const buttons = scryRenderedDOMComponentsWithTag(component, 'button');
 
@@ -24,15 +28,16 @@ describe('Voting', () => {
   });
 
   it('invokes callback when a button is clicked', () => {
+    let component;
+    let votedWith;
     const pair = Immutable.fromJS([{ id: 1, name: 'Trainspotting', total_votes: 5 },
                          { id: 2, name: '28 Days Later', total_votes: 0 }]);
-    let votedWith;
-    const vote = (entry) => votedWith = entry;
 
-    const component = renderIntoDocument(
+    renderIntoDocument(
       <Voting
+        ref={n => { component = n; }}
         pair={pair}
-        vote={vote}
+        vote={(entry) => { votedWith = entry; }}
       />,
     );
     const buttons = scryRenderedDOMComponentsWithTag(component, 'button');
@@ -42,10 +47,12 @@ describe('Voting', () => {
   });
 
   it('adds label to the voted entry', () => {
+    let component;
     const pair = Immutable.fromJS([{ id: 1, name: 'Trainspotting', total_votes: 5 },
                          { id: 2, name: '28 Days Later', total_votes: 0 }]);
-    const component = renderIntoDocument(
+    renderIntoDocument(
       <Voting
+        ref={n => { component = n; }}
         pair={pair}
         hasChosen={1}
       />,
@@ -56,23 +63,30 @@ describe('Voting', () => {
   });
 
   it('renders just the winner when there is one', () => {
-    const component = renderIntoDocument(
-      <Voting winner="Trainspotting" />,
+    let component;
+    renderIntoDocument(
+      <Voting
+        ref={n => { component = n; }}
+        winner="Trainspotting"
+      />,
     );
     const buttons = scryRenderedDOMComponentsWithTag(component, 'button');
     expect(buttons.length).to.equal(0);
 
-    const winner = ReactDOM.findDOMNode(component.refs.winner);
-    expect(winner).to.be.ok;
+    const winner = component.winner;
     expect(winner.textContent).to.contain('Trainspotting');
   });
 
   it('renders as a pure component', () => {
+    let component;
     const pair = Immutable.fromJS([{ id: 1, name: 'Trainspotting', total_votes: 5 },
                          { id: 2, name: '28 Days Later', total_votes: 0 }]);
     const container = document.createElement('div');
-    let component = ReactDOM.render(
-      <Voting pair={pair} />,
+    ReactDOM.render(
+      <Voting
+        ref={n => { component = n; }}
+        pair={pair}
+      />,
       container,
     );
 
@@ -80,8 +94,11 @@ describe('Voting', () => {
     expect(firstButton.textContent).to.equal('Trainspotting');
 
     pair[0] = 'Sunshine';
-    component = ReactDOM.render(
-      <Voting pair={pair} />,
+    ReactDOM.render(
+      <Voting
+        ref={n => { component = n; }}
+        pair={pair}
+      />,
       container,
     );
     firstButton = scryRenderedDOMComponentsWithTag(component, 'button')[0];
@@ -89,11 +106,15 @@ describe('Voting', () => {
   });
 
   it('does update DOM when prop changes', () => {
+    let component;
     const pair = Immutable.fromJS([{ id: 1, name: 'Trainspotting', total_votes: 5 },
                          { id: 2, name: '28 Days Later', total_votes: 0 }]);
     const container = document.createElement('div');
-    let component = ReactDOM.render(
-      <Voting pair={pair} />,
+    ReactDOM.render(
+      <Voting
+        ref={n => { component = n; }}
+        pair={pair}
+      />,
       container,
     );
 
@@ -101,8 +122,11 @@ describe('Voting', () => {
     expect(firstButton.textContent).to.equal('Trainspotting');
 
     const newPair = pair.set(0, Map({ id: 3, name: 'Sunshine', total_votes: 0 }));
-    component = ReactDOM.render(
-      <Voting pair={newPair} />,
+    ReactDOM.render(
+      <Voting
+        ref={n => { component = n; }}
+        pair={newPair}
+      />,
       container,
     );
     firstButton = scryRenderedDOMComponentsWithTag(component, 'button')[0];

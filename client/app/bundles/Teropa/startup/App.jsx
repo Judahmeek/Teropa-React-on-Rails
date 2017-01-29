@@ -14,7 +14,7 @@ import createStore from '../store/store';
 // knowing the locale. See the React on Rails documentation for more info on the railsContext
 const App = (props, _railsContext) => {
   const store = createStore(props);
-  
+
   // Create an enhanced history that syncs navigation events with the store
   const history = syncHistoryWithStore(
     hashHistory,

@@ -7,7 +7,7 @@ const actionTypes = mirrorCreator([
   'NEXT',
   'RESTART',
   'SET_STATE',
-  'VOTE'
+  'VOTE',
 ]);
 
 // actionTypes = {HELLO_WORLD_NAME_UPDATE: "HELLO_WORLD_NAME_UPDATE"}

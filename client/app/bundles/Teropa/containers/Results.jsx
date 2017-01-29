@@ -1,7 +1,8 @@
-// Todo: Refactor into Tally & Winner components with Results component as parent (like was done with Vote/Voting/Winner)
+// Todo: Refactor into Tally & Winner components with Results component
+// as parent (like was done with Vote/Voting/Winner)
 
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 import BaseComponent from '../../../libs/components/BaseComponent';
 
@@ -14,7 +15,10 @@ export class Results extends BaseComponent {
   }
   render() {
     return this.props.winner ?
-      <Winner ref="winner" winner={this.props.winner} /> :
+      <Winner
+        winnerRef={n => { this.winner = n; }}
+        winner={this.props.winner}
+      /> :
       <div className="results">
         <div className="tally">
           {this.getPair().map(entry =>
@@ -23,21 +27,25 @@ export class Results extends BaseComponent {
               <div className="voteCount">
                 {entry.get('total_votes')}
               </div>
-            </div>
+            </div>,
           )}
         </div>
         <div className="management">
-          <button ref="restart"
-                   className="restart"
-                  onClick={this.props.restart}>
+          <button
+            ref={n => { this.restart = n; }}
+            className="restart"
+            onClick={this.props.restart}
+          >
             Restart
           </button>
-          <button ref="next"
-                   className="next"
-                   onClick={this.props.next}>
+          <button
+            ref={n => { this.next = n; }}
+            className="next"
+            onClick={this.props.next}
+          >
             Next
           </button>
-      </div>
+        </div>
       </div>;
   }
 }
@@ -45,11 +53,11 @@ export class Results extends BaseComponent {
 function mapStateToProps(state) {
   return {
     pair: state.$$store.get('$$pair'),
-    winner: state.$$store.get('winner')
+    winner: state.$$store.get('winner'),
   };
 }
 
 export const ResultsContainer = connect(
   mapStateToProps,
-  actionCreators
+  actionCreators,
 )(Results);

@@ -11,7 +11,9 @@
     "test": "mocha --compilers js:babel-core/register --require ./tests/helpers/test_helper.js \"tests/*@(.js|.jsx)\"",
     "build:test": "webpack --config webpack.config.js",
     "build:production": "NODE_ENV=production webpack --config webpack.config.js",
-    "build:development": "webpack -w --config webpack.config.js"
+    "build:development": "webpack -w --config webpack.config.js",
+    "lint": "eslint --ext .js,.jsx .",
+    "eslint": "eslint --ext .js,.jsx"
   },
   "cacheDirectories": [
     "node_modules",
@@ -47,8 +49,15 @@
     "webpack": "^1.12.14"
   },
   "devDependencies": {
+    "babel-eslint": "^7.1.1",
     "chai": "^3.5.0",
     "chai-immutable": "^1.6.0",
+    "eslint": "^3.10.2",
+    "eslint-config-shakacode": "^13.2.0-beta.1",
+    "eslint-import-resolver-webpack": "^0.7.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.7.1",
     "jsdom": "^9.4.5",
     "mocha": "^3.0.2",
     "react-addons-test-utils": "^15.3.1",

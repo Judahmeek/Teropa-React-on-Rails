@@ -13,7 +13,7 @@ export default props => {
   // Redux expects to initialize the store using an Object, not an Immutable.Map
   const initialState = {
     $$store: $$initialState.merge({
-      $$pair
+      $$pair,
     }),
   };
 
@@ -22,9 +22,9 @@ export default props => {
     ...reducers,
     routing: routerReducer,
   });
-  
+
   const composedStore = compose(
-    applyMiddleware(thunkMiddleware)
+    applyMiddleware(thunkMiddleware),
   );
   const storeCreator = composedStore(createStore);
   const store = storeCreator(reducer, initialState);

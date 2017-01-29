@@ -1,3 +1,5 @@
+/* eslint-disable no-alert, no-console */
+
 const net = require('net');
 const fs = require('fs');
 
@@ -68,7 +70,7 @@ fs.watchFile(bundlePath + bundleFileName, (curr) => {
       return;
     }
 
-    // eslint-disable-next-line global-require
+    // eslint-disable-next-line global-require, import/no-dynamic-require
     require(bundlePath + bundleFileName);
     console.log(`Loaded server bundle: ${bundlePath + bundleFileName}`);
     handler.initialize();

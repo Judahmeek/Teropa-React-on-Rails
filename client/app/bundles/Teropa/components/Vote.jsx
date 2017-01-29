@@ -9,16 +9,18 @@ export default class Vote extends BaseComponent {
     return this.props.hasChosen === entry.get('id');
   }
   render() {
-    return <div className="voting">
+    return (<div className="voting">
       {this.getPair().map(entry =>
-        <button key={entry}
-                onClick={() => this.props.vote(entry)}>
+        <button
+          key={entry}
+          onClick={() => this.props.vote(entry)}
+        >
           <h1>{entry.get('name')}</h1>
           {this.hasChosen(entry) ?
             <div className="label">Chosen</div> :
             null}
-        </button>
+        </button>,
       )}
-    </div>;
+    </div>);
   }
 }

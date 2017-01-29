@@ -1,21 +1,23 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import {
   renderIntoDocument,
   scryRenderedDOMComponentsWithClass,
-  Simulate
+  Simulate,
 } from 'react-addons-test-utils';
+import { expect } from 'chai';
 import Immutable from 'immutable';
-import {Results} from '../app/bundles/Teropa/containers/Results';
-import {expect} from 'chai';
+import { Results } from '../app/bundles/Teropa/containers/Results';
 
 describe('Results', () => {
-
   it('renders entries with vote counts or zero', () => {
-    const pair = Immutable.fromJS([{'id': 1, 'name': 'Trainspotting', 'total_votes': 5},
-                         {'id': 2, 'name': '28 Days Later', 'total_votes': 0}]);
-    const component = renderIntoDocument(
-      <Results pair={pair} />
+    let component;
+    const pair = Immutable.fromJS([{ id: 1, name: 'Trainspotting', total_votes: 5 },
+                         { id: 2, name: '28 Days Later', total_votes: 0 }]);
+    renderIntoDocument(
+      <Results
+        ref={n => { component = n; }}
+        pair={pair}
+      />,
     );
     const entries = scryRenderedDOMComponentsWithClass(component, 'entry');
     const [train, days] = entries.map(e => e.textContent);
@@ -28,41 +30,50 @@ describe('Results', () => {
   });
 
   it('invokes the next callback when next button is clicked', () => {
+    let component;
     let nextInvoked = false;
-    const next = () => nextInvoked = true;
 
-    const pair = Immutable.fromJS([{'id': 1, 'name': 'Trainspotting', 'total_votes': 5},
-                         {'id': 2, 'name': '28 Days Later', 'total_votes': 0}]);
-    const component = renderIntoDocument(
-      <Results pair={pair}
-               next={next} />
+    const pair = Immutable.fromJS([{ id: 1, name: 'Trainspotting', total_votes: 5 },
+                         { id: 2, name: '28 Days Later', total_votes: 0 }]);
+    renderIntoDocument(
+      <Results
+        ref={n => { component = n; }}
+        pair={pair}
+        next={() => { nextInvoked = true; }}
+      />,
     );
-    Simulate.click(ReactDOM.findDOMNode(component.refs.next));
+    Simulate.click(component.next);
 
     expect(nextInvoked).to.equal(true);
   });
-  
+
   it('invokes the restart callback when restart button is clicked', () => {
+    let component;
     let restartInvoked = false;
 
-    const pair = Immutable.fromJS([{'id': 1, 'name': 'Trainspotting', 'total_votes': 5},
-                         {'id': 2, 'name': '28 Days Later', 'total_votes': 0}]);
-    const component = renderIntoDocument(
-      <Results pair={pair}
-               restart={() => restartInvoked = true} />
+    const pair = Immutable.fromJS([{ id: 1, name: 'Trainspotting', total_votes: 5 },
+                         { id: 2, name: '28 Days Later', total_votes: 0 }]);
+    renderIntoDocument(
+      <Results
+        pair={pair}
+        ref={n => { component = n; }}
+        restart={() => { restartInvoked = true; }}
+      />,
     );
-    Simulate.click(ReactDOM.findDOMNode(component.refs.restart));
+    Simulate.click(component.restart);
 
     expect(restartInvoked).to.equal(true);
   });
-  
+
   it('renders the winner when there is one', () => {
-    const component = renderIntoDocument(
-      <Results winner="Trainspotting" />
+    let component;
+    renderIntoDocument(
+      <Results
+        ref={n => { component = n; }}
+        winner="Trainspotting"
+      />,
     );
-    const winner = ReactDOM.findDOMNode(component.refs.winner);
-    expect(winner).to.be.ok;
+    const winner = component.winner;
     expect(winner.textContent).to.contain('Trainspotting');
   });
-
 });

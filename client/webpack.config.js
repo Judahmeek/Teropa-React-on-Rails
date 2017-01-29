@@ -1,3 +1,5 @@
+/* eslint-disable comma-dangle */
+
 const webpack = require('webpack');
 const path = require('path');
 
@@ -10,7 +12,7 @@ const config = {
     'es5-shim/es5-sham',
     'babel-polyfill',
     './app/bundles/Teropa/startup/App',
-    'vanilla-ujs'
+    'vanilla-ujs',
   ],
 
   output: {
@@ -25,7 +27,7 @@ const config = {
       'react-dom': path.resolve('./node_modules/react-dom'),
     },
   },
-  
+
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
@@ -33,7 +35,7 @@ const config = {
       },
     }),
   ],
-  
+
   module: {
     loaders: [
       {
