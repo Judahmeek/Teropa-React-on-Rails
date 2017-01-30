@@ -44,7 +44,7 @@ RSpec.describe 'Results', js: true do
                        text: 'Star Wars',
                        match: :prefer_exact).find(:xpath, '..')).to have_text '1'
       click_button 'Next'
-      expect(page).to have_text `Winner is "Star Wars"!`
+      expect(page.find('.winner')).to have_text 'Winner is "Star Wars"!'
     end
   end
 end

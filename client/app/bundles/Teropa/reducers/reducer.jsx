@@ -6,6 +6,9 @@ export const $$initialState = Immutable.fromJS({
 });
 
 function setState($$state, newState) {
+  if ('winner' in newState) {
+    return $$state.merge(newState);
+  }
   const $$mergedState = $$state.mergeIn(['$$pair'], Immutable.fromJS(newState));
   const idComparison = [$$state.getIn(['$$pair', 0, 'id']) === $$mergedState.getIn(['$$pair', 0, 'id']),
     $$state.getIn(['$$pair', 1, 'id']) === $$mergedState.getIn(['$$pair', 1, 'id'])];
