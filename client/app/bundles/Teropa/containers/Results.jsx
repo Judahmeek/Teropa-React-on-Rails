@@ -4,12 +4,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import BaseComponent from '../../../libs/components/BaseComponent';
-
 import Winner from '../components/Winner';
 import * as actionCreators from '../actions/actionCreators';
 
-export class Results extends BaseComponent {
+export class Results extends React.PureComponent {
   getPair() {
     return this.props.pair || [];
   }
