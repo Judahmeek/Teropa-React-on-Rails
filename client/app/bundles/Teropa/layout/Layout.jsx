@@ -1,7 +1,6 @@
-import { PropTypes } from 'react';
-import BaseComponent from '../../../libs/components/BaseComponent';
+import React, { PropTypes } from 'react';
 
-export default class Layout extends BaseComponent {
+export default class Layout extends React.PureComponent {
 
   static propTypes = {
     children: PropTypes.element.isRequired,

@@ -1,7 +1,6 @@
 import React from 'react';
-import BaseComponent from '../../../libs/components/BaseComponent';
 
-export default class Vote extends BaseComponent {
+export default class Vote extends React.PureComponent {
   getPair() {
     return this.props.pair || [];
   }

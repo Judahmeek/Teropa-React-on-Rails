@@ -1,13 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import BaseComponent from '../../../libs/components/BaseComponent';
-
 import Winner from '../components/Winner';
 import Vote from '../components/Vote';
 import * as actionCreators from '../actions/actionCreators';
 
-export class Voting extends BaseComponent {
+export class Voting extends React.PureComponent {
   render() {
     return (<div>
       {this.props.winner ?
