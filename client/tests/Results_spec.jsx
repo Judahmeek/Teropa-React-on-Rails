@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   renderIntoDocument,
+  findRenderedDOMComponentWithClass,
   scryRenderedDOMComponentsWithClass,
   Simulate,
 } from 'react-addons-test-utils';
@@ -42,7 +43,7 @@ describe('Results', () => {
         next={() => { nextInvoked = true; }}
       />,
     );
-    Simulate.click(component.next);
+    Simulate.click(findRenderedDOMComponentWithClass(component, 'next'));
 
     expect(nextInvoked).to.equal(true);
   });
@@ -60,7 +61,7 @@ describe('Results', () => {
         restart={() => { restartInvoked = true; }}
       />,
     );
-    Simulate.click(component.restart);
+    Simulate.click(findRenderedDOMComponentWithClass(component, 'restart'));
 
     expect(restartInvoked).to.equal(true);
   });
