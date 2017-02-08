@@ -11,4 +11,12 @@ FactoryGirl.define do
       name 'Lord of the Rings'
     end
   end
+
+  factory :entry do
+    name 'entry'
+
+    factory :godfather do
+      name 'The Godfather'
+    end
+  end
 end

@@ -3,23 +3,18 @@ import { routerReducer } from 'react-router-redux';
 import thunkMiddleware from 'redux-thunk';
 import Immutable from 'immutable';
 
-import reducers, { initialStates } from '../reducers';
+import reducer from '../reducers/reducer';
 
 export default props => {
-  // This is how we get initial props Rails into redux.
-  const $$pair = Immutable.fromJS(props);
-  const { $$initialState } = initialStates;
 
   // Redux expects to initialize the store using an Object, not an Immutable.Map
   const initialState = {
-    $$store: $$initialState.merge({
-      $$pair,
-    }),
+    $$store: Immutable.fromJS(props),
   };
 
   // https://github.com/reactjs/react-router-redux
-  const reducer = combineReducers({
-    ...reducers,
+  const reducers = combineReducers({
+    $$store: reducer,
     routing: routerReducer,
   });
 
@@ -27,6 +22,6 @@ export default props => {
     applyMiddleware(thunkMiddleware),
   );
   const storeCreator = composedStore(createStore);
-  const store = storeCreator(reducer, initialState);
+  const store = storeCreator(reducers, initialState);
   return store;
 };

@@ -3,6 +3,10 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
+  def label_pair(pair)
+    { '$$pair': pair }
+  end
+
   def strip_timestamps(records)
     list = []
     records.each do |record|

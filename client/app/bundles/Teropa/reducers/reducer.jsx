@@ -1,15 +1,12 @@
 import Immutable from 'immutable';
 import actionTypes from '../constants/actionTypes';
 
-export const $$initialState = Immutable.fromJS({
-  $$pair: {},
-});
-
 function setState($$state, newState) {
+  if (!newState) {return $$state;}
   if ('winner' in newState) {
     return $$state.merge(newState);
   }
-  const $$mergedState = $$state.mergeIn(['$$pair'], Immutable.fromJS(newState));
+  const $$mergedState = $$state.merge(Immutable.fromJS(newState));
   const idComparison = [$$state.getIn(['$$pair', 0, 'id']) === $$mergedState.getIn(['$$pair', 0, 'id']),
     $$state.getIn(['$$pair', 1, 'id']) === $$mergedState.getIn(['$$pair', 1, 'id'])];
   if ($$mergedState.get('hasChosen') && !(idComparison[0] && idComparison[1])) {
@@ -19,12 +16,7 @@ function setState($$state, newState) {
 }
 
 function vote($$state, id) {
-  const idComparison = [$$state.getIn(['$$pair', 0, 'id']) === id,
-    $$state.getIn(['$$pair', 1, 'id']) === id];
-  if (idComparison[0] || idComparison[1]) {
-    return $$state.set('hasChosen', id);
-  }
-  return $$state;
+  return $$state.set('hasChosen', id);
 }
 
 export default function ($$state = Immutable.Map(), action) {
