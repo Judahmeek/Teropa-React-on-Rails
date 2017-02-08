@@ -1,4 +1,5 @@
 import React from 'react';
+import { List } from 'immutable';
 
 export default class Tally extends React.PureComponent {
   getPair() {
@@ -33,3 +34,9 @@ export default class Tally extends React.PureComponent {
     </div>);
   }
 }
+
+Tally.propTypes = {
+  pair: React.PropTypes.instanceOf(List).isRequired,
+  next: React.PropTypes.func.isRequired,
+  restart: React.PropTypes.func.isRequired,
+};

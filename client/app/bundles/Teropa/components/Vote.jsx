@@ -1,4 +1,5 @@
 import React from 'react';
+import { List } from 'immutable';
 
 export default class Vote extends React.PureComponent {
   getPair() {
@@ -23,3 +24,9 @@ export default class Vote extends React.PureComponent {
     </div>);
   }
 }
+
+Vote.propTypes = {
+  pair: React.PropTypes.instanceOf(List).isRequired,
+  vote: React.PropTypes.func.isRequired,
+  hasChosen: React.PropTypes.number,
+};

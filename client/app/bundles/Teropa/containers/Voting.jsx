@@ -18,6 +18,10 @@ export class Voting extends React.PureComponent {
   }
 }
 
+Voting.propTypes = {
+  winner: React.PropTypes.shape(({ winner: React.PropTypes.string.isRequired })).isRequired,
+};
+
 function mapStateToProps(state) {
   return {
     pair: state.$$store.get('$$pair'),

@@ -2,7 +2,7 @@ import Immutable from 'immutable';
 import actionTypes from '../constants/actionTypes';
 
 function setState($$state, newState) {
-  if (!newState) {return $$state;}
+  if (!newState) { return $$state; }
   if ('winner' in newState) {
     return $$state.merge(newState);
   }
