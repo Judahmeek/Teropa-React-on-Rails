@@ -19,7 +19,7 @@ class AjaxController < ApplicationController
         end
       end
     end
-    render json: strip_timestamps(candidate_pair)
+    render json: label_pair(strip_timestamps(candidate_pair))
   end
 
   def restart
@@ -29,7 +29,7 @@ class AjaxController < ApplicationController
     ActiveRecord::Tasks::DatabaseTasks.load_seed
     session[:vote_id] = nil
     candidate_pair = Candidate.order(:id)
-    render json: strip_timestamps(candidate_pair)
+    render json: label_pair(strip_timestamps(candidate_pair))
   end
 
   def vote
@@ -48,6 +48,6 @@ class AjaxController < ApplicationController
       candidate.update(total_votes: candidate.total_votes + 1)
     end
     candidate_pair = Candidate.order(:id)
-    render json: strip_timestamps(candidate_pair)
+    render json: label_pair(strip_timestamps(candidate_pair))
   end
 end

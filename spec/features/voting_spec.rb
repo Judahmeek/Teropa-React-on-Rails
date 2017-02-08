@@ -3,9 +3,11 @@ require 'rails_helper'
 
 RSpec.describe 'Voting', js: true do
   before(:example) do
-    create(:star_wars)
-    create(:lotr)
-    visit root_path
+    unless RSpec.current_example.metadata[:skip_before]
+      create(:star_wars)
+      create(:lotr)
+      visit root_path
+    end
   end
 
   it 'contains buttons with candidate names' do
@@ -24,5 +26,11 @@ RSpec.describe 'Voting', js: true do
     expect(page.find('h1',
                      text: 'Star Wars',
                      match: :prefer_exact).find(:xpath, '..')).to have_text '1'
+  end
+
+  it 'handles winner props', skip_before: true do
+    create(:godfather)
+    visit root_path
+    expect(page).to have_text('Winner is "The Godfather"!')
   end
 end

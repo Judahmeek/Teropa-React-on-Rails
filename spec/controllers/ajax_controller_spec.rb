@@ -32,10 +32,11 @@ RSpec.describe AjaxController, type: :controller do
       candidates = Candidate.create([{ name: 'Taco Bell', total_votes: 2 },
                                      { name: 'McDonalds', total_votes: 2 }])
       post :next_round
-      expect(response.body).to eql([{ id: candidates[0].id,
-                                      name: 'Taco Bell', total_votes: 2 },
-                                    { id: candidates[1].id,
-                                      name: 'McDonalds', total_votes: 2 }].to_json)
+      expect(response.body).to eql({ '$$pair':
+                                      [{ id: candidates[0].id,
+                                         name: 'Taco Bell', total_votes: 2 },
+                                       { id: candidates[1].id,
+                                         name: 'McDonalds', total_votes: 2 }] }.to_json)
     end
   end
 
@@ -62,10 +63,11 @@ RSpec.describe AjaxController, type: :controller do
       candidate = Candidate.create(name: 'Taco Bell', total_votes: 2)
       selected_candidate = Candidate.create(name: 'McDonalds', total_votes: 0)
       post :vote, params: { id: selected_candidate.id }
-      expect(response.body).to eql([{ id: candidate.id,
-                                      name: 'Taco Bell', total_votes: 2 },
-                                    { id: selected_candidate.id,
-                                      name: 'McDonalds', total_votes: 1 }].to_json)
+      expect(response.body).to eql({ '$$pair':
+                                      [{ id: candidate.id,
+                                         name: 'Taco Bell', total_votes: 2 },
+                                       { id: selected_candidate.id,
+                                         name: 'McDonalds', total_votes: 1 }] }.to_json)
     end
 
     it 'provides the voter with a session_id if the voter does not have one already' do
@@ -81,10 +83,11 @@ RSpec.describe AjaxController, type: :controller do
       new_candidate = Candidate.create(name: 'McDonalds', total_votes: 0)
       vote = Vote.create(candidates_id: old_candidate.id)
       post :vote, params: { id: new_candidate.id }, session: { vote_id: vote.id }
-      expect(response.body).to eql([{ id: old_candidate.id,
-                                      name: 'Taco Bell', total_votes: 1 },
-                                    { id: new_candidate.id,
-                                      name: 'McDonalds', total_votes: 1 }].to_json)
+      expect(response.body).to eql({ '$$pair':
+                                      [{ id: old_candidate.id,
+                                         name: 'Taco Bell', total_votes: 1 },
+                                       { id: new_candidate.id,
+                                         name: 'McDonalds', total_votes: 1 }] }.to_json)
     end
 
     it 'renders nothing if the voter repeats the same vote' do

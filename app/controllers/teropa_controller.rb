@@ -6,7 +6,7 @@ class TeropaController < ApplicationController
     @props = if candidate_pair.empty?
                { winner: Entry.first.name }
              else
-               strip_timestamps(candidate_pair)
+               label_pair(strip_timestamps(candidate_pair))
              end
   end
 end
