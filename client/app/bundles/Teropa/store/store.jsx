@@ -6,7 +6,6 @@ import Immutable from 'immutable';
 import reducer from '../reducers/reducer';
 
 export default props => {
-
   // Redux expects to initialize the store using an Object, not an Immutable.Map
   const initialState = {
     $$store: Immutable.fromJS(props),

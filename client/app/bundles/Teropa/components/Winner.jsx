@@ -7,3 +7,8 @@ export default class Winner extends React.PureComponent {
     </div>);
   }
 }
+
+Winner.propTypes = {
+  winner: React.PropTypes.shape(({ winner: React.PropTypes.string.isRequired })).isRequired,
+  winnerRef: React.PropTypes.func.isRequired,
+};

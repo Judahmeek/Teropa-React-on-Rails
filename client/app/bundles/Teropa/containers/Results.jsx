@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Tally from '../components/Tally'
+import Tally from '../components/Tally';
 import Winner from '../components/Winner';
 import * as actionCreators from '../actions/actionCreators';
 
@@ -15,6 +15,10 @@ export class Results extends React.PureComponent {
       <Tally {...this.props} />;
   }
 }
+
+Results.propTypes = {
+  winner: React.PropTypes.shape(({ winner: React.PropTypes.string.isRequired })),
+};
 
 function mapStateToProps(state) {
   return {
