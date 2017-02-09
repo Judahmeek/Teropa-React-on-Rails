@@ -6,6 +6,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 
 import routes from '../routes/routes';
 import createStore from '../store/store';
+import rootSaga from '../store/sagas';
 
 // See documentation for https://github.com/reactjs/react-redux.
 // This is how you get props from the Rails view into the redux store.
@@ -14,6 +15,7 @@ import createStore from '../store/store';
 // knowing the locale. See the React on Rails documentation for more info on the railsContext
 const App = (props, _railsContext) => {
   const store = createStore(props);
+  store.runSaga(rootSaga);
 
   // Create an enhanced history that syncs navigation events with the store
   const history = syncHistoryWithStore(

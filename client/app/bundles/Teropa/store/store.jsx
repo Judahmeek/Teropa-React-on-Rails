@@ -1,9 +1,10 @@
 import { compose, createStore, applyMiddleware, combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
-import thunkMiddleware from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
 import Immutable from 'immutable';
 
 import reducer from '../reducers/reducer';
+import rootSaga from './sagas';
 
 export default props => {
   // Redux expects to initialize the store using an Object, not an Immutable.Map
@@ -17,10 +18,12 @@ export default props => {
     routing: routerReducer,
   });
 
+  const sagaMiddleware = createSagaMiddleware();
   const composedStore = compose(
-    applyMiddleware(thunkMiddleware),
+    applyMiddleware(sagaMiddleware),
   );
   const storeCreator = composedStore(createStore);
-  const store = storeCreator(reducers, initialState);
+  const store = { ...storeCreator(reducers, initialState),
+                  runSaga: sagaMiddleware.run };
   return store;
 };
