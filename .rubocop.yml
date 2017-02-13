@@ -8,6 +8,10 @@ Metrics/AbcSize:
   Exclude:
     - app/controllers/ajax_controller.rb
 
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*
+
 Metrics/MethodLength:
   Exclude:
     - app/controllers/ajax_controller.rb
