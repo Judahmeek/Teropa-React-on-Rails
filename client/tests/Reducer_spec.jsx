@@ -29,7 +29,7 @@ describe('Reducer', () => {
     });
   });
 
-  describe('Vote', () => {
+  describe('vote', () => {
     it('sets hasChosen if unset', () => {
       const state = fromJS({ $$pair: [{ id: 1, name: 'Red', tally: 2 }, { id: 3, name: 'Blue', tally: 4 }] });
       const action = { type: actionTypes.VOTE, id: 1 };

@@ -4,7 +4,6 @@ import createSagaMiddleware from 'redux-saga';
 import Immutable from 'immutable';
 
 import reducer from '../reducers/reducer';
-import rootSaga from './sagas';
 
 export default props => {
   // Redux expects to initialize the store using an Object, not an Immutable.Map
@@ -24,6 +23,6 @@ export default props => {
   );
   const storeCreator = composedStore(createStore);
   const store = { ...storeCreator(reducers, initialState),
-                  runSaga: sagaMiddleware.run };
+                  runSaga: sagaMiddleware.run }; // eslint-disable-line indent
   return store;
 };

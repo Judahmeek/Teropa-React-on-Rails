@@ -1,9 +1,10 @@
+/* eslint-disable no-console */
+import { call, put, fork, takeEvery } from 'redux-saga/effects';
 import actionTypes from '../constants/actionTypes';
 import * as actionCreators from '../actions/actionCreators';
 import requestManager from '../../../libs/requestManager';
-import { call, put, fork, takeEvery } from 'redux-saga/effects';
 
-function* next(action) {
+export function* next(action) {
   try {
     const response = yield call(requestManager.submitEntity, action);
     yield put(actionCreators.setState(response.data));
@@ -12,7 +13,7 @@ function* next(action) {
   }
 }
 
-function* restart(action) {
+export function* restart(action) {
   try {
     const response = yield call(requestManager.submitEntity, action);
     yield put(actionCreators.setState(response.data));
@@ -21,9 +22,8 @@ function* restart(action) {
   }
 }
 
-function* vote(action) {
+export function* vote(action) {
   try {
-    yield put(action);
     const response = yield call(requestManager.submitEntity, action);
     yield put(actionCreators.setState(response.data));
   } catch (error) {
@@ -31,15 +31,15 @@ function* vote(action) {
   }
 }
 
-export function* nextSaga() {
+function* nextSaga() {
   yield takeEvery(actionTypes.NEXT, next);
 }
 
-export function* restartSaga() {
+function* restartSaga() {
   yield takeEvery(actionTypes.RESTART, restart);
 }
 
-export function* voteSaga() {
+function* voteSaga() {
   yield takeEvery(actionTypes.VOTE, vote);
 }
 

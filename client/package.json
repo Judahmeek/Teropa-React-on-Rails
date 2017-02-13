@@ -7,6 +7,7 @@
   },
   "scripts": {
     "babel": "babel --out-dir babel-output app/libs/components",
+    "babel-node": "babel-node",
     "babel-test": "babel --out-dir compiled_tests tests",
     "test": "mocha --compilers js:babel-core/register --require ./tests/helpers/test_helper.js \"tests/*@(.js|.jsx)\"",
     "build:test": "webpack --config webpack.config.js",

@@ -23,7 +23,6 @@ Voting.propTypes = {
 };
 
 function mapStateToProps(state) {
-  console.log(state.$$store.toString());
   return {
     pair: state.$$store.get('$$pair'),
     hasChosen: state.$$store.get('hasChosen'),
