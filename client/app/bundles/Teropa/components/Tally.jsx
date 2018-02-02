@@ -7,7 +7,7 @@ export default class Tally extends React.PureComponent {
   }
   render() {
     return (<div className="results">
-      <div className="tally">
+      <div className="tally nop">
         {this.getPair().map(entry =>
           <div key={entry} className="entry">
             <h1>{entry.get('name')}</h1>
